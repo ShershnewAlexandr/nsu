@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Info = require('../models/Info');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const errorHandler = require('../utils/errorHandler');
@@ -19,6 +20,7 @@ module.exports.login = async (req, res) => {
             });
             res.status(200).json({
                 token: `Bearer ${token}`,
+                userId: candidate._id,
             })
         } else {
             res.status(401).json({
@@ -50,7 +52,11 @@ module.exports.register = async (req, res) => {
         });
 
         try {
-            await user.save();
+            const newUser = await user.save();
+            console.log(newUser);
+            await new Info({
+                userId: newUser._id,
+            }).save();
             res.status(201).json(user);
         } catch (e) {
             errorHandler(res, e);

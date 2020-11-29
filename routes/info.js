@@ -3,9 +3,7 @@ const controller = require('../controllers/info');
 const passport = require('passport');
 const router = express.Router();
 
-router.get('/get', passport.authenticate('jwt', {session: false}), controller.get);
-router.post('/create', controller.create);
-router.patch('/update', controller.update);
-router.delete('/delete', controller.delete);
+router.get('/get', controller.get);
+router.post('/update', passport.authenticate('jwt', {session: false}), controller.update);
 
 module.exports = router;
