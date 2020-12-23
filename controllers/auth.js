@@ -4,6 +4,7 @@ const Info = require('../models/Info');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const errorHandler = require('../utils/errorHandler');
+const contentShadow = require('../config/ContentShadow');
 
 module.exports.login = async (req, res) => {
     const candidate = await User.findOne({
@@ -56,6 +57,7 @@ module.exports.register = async (req, res) => {
             console.log(newUser);
             await new Info({
                 userId: newUser._id,
+                content: contentShadow,
             }).save();
             res.status(201).json(user);
         } catch (e) {

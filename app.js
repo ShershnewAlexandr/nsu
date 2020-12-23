@@ -8,7 +8,7 @@ const infoRoutes = require('./routes/info');
 const keys = require('./config/keys');
 const app = express();
 
-mongoose.connect(keys.mongoURL)
+mongoose.connect(keys.mongoURL, { useUnifiedTopology: true })
     .then(() => {
         console.log('mongodb connected');
     })
